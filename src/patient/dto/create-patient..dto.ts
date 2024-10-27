@@ -1,7 +1,7 @@
 // src/patient/dto/create-patient.dto.ts
 
-import { IsString, IsDate, IsNumber, IsNotEmpty } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
+
 
 export class CreatePatientDto {
     @IsString()
