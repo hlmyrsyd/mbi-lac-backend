@@ -1,14 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Patient } from './patient.model';
 import { Prisma } from '@prisma/client';
+import { CreatePatientDto } from './dto/create-patient..dto';
 
 @Injectable()
 export class PatientService {
     constructor(private readonly prisma: PrismaService) {}
 
-    async createPatient(data: Prisma.PatientCreateInput): Promise<Patient> {
-        return this.prisma.patient.create({ data });
+    async createPatient(data: CreatePatientDto) {
+        try {
+            return await this.prisma.patient.create({ data });
+        } catch (error) {
+            console.error("Create Patient Error:", error);
+            throw new BadRequestException("Invalid patient data");
+        }
     }
 
     async getPatients(): Promise<Patient[]> {

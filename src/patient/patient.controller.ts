@@ -1,15 +1,20 @@
-import { Controller, Get, Post, Param, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put, Delete, BadRequestException } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { Patient } from './patient.model';
 import { Prisma } from '@prisma/client';
+import { CreatePatientDto } from './dto/create-patient..dto';
 
 @Controller('patients')
 export class PatientController {
     constructor(private readonly patientService: PatientService) {}
 
     @Post()
-    async createPatient(@Body() data: Prisma.PatientCreateInput): Promise<Patient> {
-        return this.patientService.createPatient(data);
+    async createPatient(@Body() createPatientDto: CreatePatientDto) {
+        try {
+            return await this.patientService.createPatient(createPatientDto);
+        } catch (error) {
+            throw new BadRequestException('Invalid patient data');
+        }
     }
 
     @Get()
