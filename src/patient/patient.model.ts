@@ -9,4 +9,14 @@ export class Patient implements Prisma.PatientCreateInput {
     status: string;
     createdAt?: string | Date;
     updatedAt?: string | Date;
+    weight?: string;
+    height?: string;
+    diseaseHistory?: string[] | Prisma.PatientCreatediseaseHistoryInput;
+    laborHistory?: string[] | Prisma.PatientCreatelaborHistoryInput;
+    breastfeedHistory?: string[] | Prisma.PatientCreatebreastfeedHistoryInput;
+    guardianName: string;
+    guardianGender: string;
+    guardianAge: number;
+    guardianStatus: string;
+    consultations?: Prisma.ConsultationHistoryCreateNestedManyWithoutPatientInput;
 }
