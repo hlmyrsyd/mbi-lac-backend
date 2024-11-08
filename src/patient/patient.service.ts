@@ -21,18 +21,29 @@ export class PatientService {
         return this.prisma.patient.findMany();
     }
 
-    async getPatientById(id: string): Promise<Patient | null> {
-        return this.prisma.patient.findUnique({ where: { id } });
+    async getPatientById(id: string): Promise<any | null> {
+        return this.prisma.patient.findUnique({
+            where: { id },
+            include: {
+                consultations: {
+                include: {
+                    consultationData: true,
+                },
+                },
+            },
+        });
     }
 
     async updatePatient(id: string, data: Prisma.PatientUpdateInput): Promise<Patient> {
         return this.prisma.patient.update({
         where: { id },
-        data,
+        data
         });
     }
 
     async deletePatient(id: string): Promise<Patient> {
-        return this.prisma.patient.delete({ where: { id } });
+        return this.prisma.patient.delete({
+            where: { id }
+        });
     }
 }
