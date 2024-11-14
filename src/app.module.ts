@@ -1,9 +1,15 @@
+import { ConsultationDataModule } from './consultationData/consultaationData.module';
+import { ConsultationHistoryModule } from './consultationHistory/consultationHistory.module';
 import { APP_PIPE } from '@nestjs/core';
 import { PatientModule } from './patient/patient.module';
 import { Module, ValidationPipe } from '@nestjs/common';
 
 @Module({
-  imports: [PatientModule],
+  imports: [
+    PatientModule,
+    ConsultationHistoryModule,
+    ConsultationDataModule
+  ],
   controllers: [],
   providers: [
     {
