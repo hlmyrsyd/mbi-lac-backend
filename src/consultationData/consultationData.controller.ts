@@ -17,7 +17,7 @@ export class ConsultationDataController {
 
     @Get(':consultationId')
     @ApiOperation({ summary: 'Get consultation data by consultation ID' })
-    @ApiParam({ name: 'patientId', description: 'The ID of the consultation' })
+    // @ApiParam({ name: 'patientId', description: 'The ID of the consultation' })
     findByConsultationId(@Param('consultationId') consultationId: string) {
         return this.consultationDataService.findByConsultationId(consultationId);
     }
