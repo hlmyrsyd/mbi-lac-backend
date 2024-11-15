@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ConsultationHistoryService } from './consultationHistory.service';
 import { CreateConsultationHistoryDto } from './dto/create-consultationHistory.dto';
@@ -20,5 +20,12 @@ export class ConsultationHistoryController {
     @ApiParam({ name: 'patientId', description: 'The ID of the patient' })
     findByPatientId(@Param('patientId') patientId: string) {
         return this.consultationHistoryService.findByPatientId(patientId);
+    }
+
+    @Delete(':id')
+    @ApiOperation({ summary: 'Delete consultations by ID' })
+    @ApiResponse({ status: 201, description: 'Consultation successfully deleted.' })
+    async deleteConsultationHistory(@Param('id') id: string) {
+        return this.consultationHistoryService.deleteConsultationHistory(id);
     }
 }

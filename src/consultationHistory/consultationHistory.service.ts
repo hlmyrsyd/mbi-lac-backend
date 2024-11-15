@@ -20,4 +20,18 @@ export class ConsultationHistoryService {
         where: { patientId },
         });
     }
+
+    async deleteConsultationHistory(id: string) {
+        try {
+            await this.prisma.consultationData.deleteMany({
+                where: { consultationId: id },
+            });
+        
+            return this.prisma.consultationHistory.delete({
+                where: { id },
+            });
+            } catch (error) {
+            throw new Error(`Failed to delete consultation history with ID ${id}: ${error.message}`);
+            }
+        } 
 }

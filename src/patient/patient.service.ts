@@ -26,9 +26,9 @@ export class PatientService {
             where: { id },
             include: {
                 consultations: {
-                include: {
-                    consultationData: true,
-                },
+                    include: {
+                        consultationData: true,
+                    },
                 },
             },
         });
