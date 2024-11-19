@@ -18,7 +18,6 @@ export class ConsultationDataService {
     }
 
     async update(consultationId: string, updateFields: Partial<CreateConsultationDataDto>) {
-        // Fetch the current consultation data
         const currentData = await this.prisma.consultationData.findUnique({
             where: { consultationId },
         });
@@ -27,7 +26,6 @@ export class ConsultationDataService {
             throw new Error(`Consultation data with ID ${consultationId} not found.`);
         }
     
-        // Merge `lastMed` arrays, avoiding duplicates
         if (updateFields.lastMed && Array.isArray(updateFields.lastMed)) {
             const newMedications = updateFields.lastMed.filter(
                 (med) => !(currentData.lastMed || []).includes(med)
@@ -35,7 +33,6 @@ export class ConsultationDataService {
             updateFields.lastMed = [...(currentData.lastMed || []), ...newMedications];
         }
     
-        // Update the consultation data
         return this.prisma.consultationData.update({
             where: { consultationId },
             data: updateFields,
