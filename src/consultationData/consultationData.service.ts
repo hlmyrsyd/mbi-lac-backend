@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateConsultationDataDto } from './dto/create-consultationData.dto';
 
@@ -15,4 +16,29 @@ export class ConsultationDataService {
         where: { consultationId },
         });
     }
+
+    async update(consultationId: string, updateFields: Partial<CreateConsultationDataDto>) {
+        // Fetch the current consultation data
+        const currentData = await this.prisma.consultationData.findUnique({
+            where: { consultationId },
+        });
+    
+        if (!currentData) {
+            throw new Error(`Consultation data with ID ${consultationId} not found.`);
+        }
+    
+        // Merge `lastMed` arrays, avoiding duplicates
+        if (updateFields.lastMed && Array.isArray(updateFields.lastMed)) {
+            const newMedications = updateFields.lastMed.filter(
+                (med) => !(currentData.lastMed || []).includes(med)
+            );
+            updateFields.lastMed = [...(currentData.lastMed || []), ...newMedications];
+        }
+    
+        // Update the consultation data
+        return this.prisma.consultationData.update({
+            where: { consultationId },
+            data: updateFields,
+        });
+    }    
 }

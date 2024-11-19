@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ConsultationDataService } from './consultationData.service';
 import { CreateConsultationDataDto } from './dto/create-consultationData.dto';
 
@@ -17,8 +17,17 @@ export class ConsultationDataController {
 
     @Get(':consultationId')
     @ApiOperation({ summary: 'Get consultation data by consultation ID' })
-    // @ApiParam({ name: 'patientId', description: 'The ID of the consultation' })
     findByConsultationId(@Param('consultationId') consultationId: string) {
         return this.consultationDataService.findByConsultationId(consultationId);
+    }
+
+    @Put(':consultationId')
+    @ApiOperation({ summary: 'Update consultation data by consultation ID' })
+    @ApiResponse({ status: 200, description: 'Consultation data updated successfully.' })
+    update(
+        @Param('consultationId') consultationId: string,
+        @Body() updateFields: Partial<CreateConsultationDataDto>,
+    ) {
+        return this.consultationDataService.update(consultationId, updateFields);
     }
 }

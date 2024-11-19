@@ -45,7 +45,7 @@ model ConsultationHistory {
 
 model ConsultationData {
   id                  String   @id @default(uuid())
-  consultationId      String
+  consultationId      String   @unique
   date                DateTime
   activity            String[]
   fnbIntake           String[]

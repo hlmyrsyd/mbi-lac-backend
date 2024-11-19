@@ -9,8 +9,8 @@ export class Patient implements Prisma.PatientCreateInput {
     status: string;
     createdAt?: string | Date;
     updatedAt?: string | Date;
-    weight?: string;
-    height?: string;
+    weight?: number;
+    height?: number;
     diseaseHistory?: string[] | Prisma.PatientCreatediseaseHistoryInput;
     laborHistory?: string[] | Prisma.PatientCreatelaborHistoryInput;
     breastfeedHistory?: string[] | Prisma.PatientCreatebreastfeedHistoryInput;
