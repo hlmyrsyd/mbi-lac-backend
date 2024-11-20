@@ -1,4 +1,3 @@
-import { Controller, Get, Module } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -25,9 +24,14 @@ async function bootstrap() {
 
   // Listen on the provided port (Vercel dynamically sets it)
   const port = process.env.PORT || 3000;
+  const baseUrl =
+    process.env.VERCEL_URL // This is set automatically by Vercel
+      ? `https://${process.env.VERCEL_URL}`
+      : `http://localhost:${port}`;
+
   await app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}/api-docs`);
-    console.log(`Swagger API Docs: /api-docs`);
+    console.log(`Server is running on ${baseUrl}`);
+    console.log(`Swagger API Docs: ${baseUrl}/api-docs`);
   });
 }
 
