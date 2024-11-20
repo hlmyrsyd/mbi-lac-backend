@@ -3,6 +3,7 @@ import { ConsultationHistoryModule } from './consultationHistory/consultationHis
 import { APP_PIPE } from '@nestjs/core';
 import { PatientModule } from './patient/patient.module';
 import { Module, ValidationPipe } from '@nestjs/common';
+import { TestController } from './test/test.controller';
 
 @Module({
   imports: [
@@ -10,7 +11,7 @@ import { Module, ValidationPipe } from '@nestjs/common';
     ConsultationHistoryModule,
     ConsultationDataModule
   ],
-  controllers: [],
+  controllers: [TestController],
   providers: [
     {
       provide: APP_PIPE,
