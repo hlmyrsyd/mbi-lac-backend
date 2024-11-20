@@ -5,12 +5,14 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Enable CORS for the frontend URL
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000', // Your frontend URL
-    methods: 'GET,POST,PUT,DELETE,PATCH', // Allowed HTTP methods
-    allowedHeaders: 'Content-Type,Authorization', // Allowed headers
+    origin: process.env.CORS_ORIGIN || '*', // Allow all origins or specify your frontend domain
+    methods: 'GET,POST,PUT,DELETE,PATCH',
+    allowedHeaders: 'Content-Type,Authorization',
   });
 
+  // Swagger configuration
   const config = new DocumentBuilder()
     .setTitle('API Documentation')
     .setDescription('API documentation for your backend')
@@ -20,10 +22,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);
 
-  // Listen on the provided port (Vercel will set this automatically)
-  const port = process.env.PORT || 5432;
+  // Listen on the provided port (Vercel dynamically sets it)
+  const port = process.env.PORT || 3000;
   await app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}/api-docs`);
+    console.log(`Swagger API Docs: /api-docs`);
   });
 }
 
