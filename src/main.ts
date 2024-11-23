@@ -23,7 +23,7 @@ async function bootstrap() {
   SwaggerModule.setup('api-docs', app, document);
 
   // Listen on the provided port (Vercel dynamically sets it)
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 5432;
   const baseUrl =
     process.env.VERCEL_URL // This is set automatically by Vercel
       ? `https://${process.env.VERCEL_URL}`
